@@ -2,22 +2,21 @@ import Navbar from "@/components/Navbar";
 import PageWrapper from "@/components/PageWrapper";
 import ProjectDiv from "@/components/ProjectDiv";
 import { Divider } from "@mui/material";
-import { collection, getDocs, query } from "firebase/firestore";
-import { useState } from "react";
+import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { db } from "../../../firebase";
 import FuzzySearch from "fuzzy-search";
+import CreateProfileModal from "@/components/CreateProfileModal";
 const Projects = ({ projects }) => {
   const [searchValue, setSearchValue] = useState("");
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
   console.log(projects);
   const searcher = new FuzzySearch(projects, ["name", "tags"], {
     caseSensitive: false,
     sort: true,
   });
-  // var result = [
-  //   ...searcher.search(searchValue),
-  // ];
-  // result = [...new Set(result)];
   var result = searcher.search(searchValue);
   return (
     <>
@@ -40,7 +39,15 @@ const Projects = ({ projects }) => {
           <div className="flex flex-col gap-y-4">
             {result.length > 0 ? (
               result.map((project, idx) => {
-                return <ProjectDiv key={idx} {...project} />;
+                return (
+                  <ProjectDiv
+                    key={idx}
+                    {...project}
+                    setSelectedProject={setSelectedProject}
+                    setOpenModal={setOpenModal}
+                    selectedProject={selectedProject}
+                  />
+                );
               })
             ) : (
               <h1>
@@ -48,6 +55,13 @@ const Projects = ({ projects }) => {
               </h1>
             )}
           </div>
+          {openModal && (
+            <CreateProfileModal
+              setOpenModal={setOpenModal}
+              openModal={openModal}
+              project={selectedProject}
+            />
+          )}
         </div>
       </PageWrapper>
     </>
