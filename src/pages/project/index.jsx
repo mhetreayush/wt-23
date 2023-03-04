@@ -4,7 +4,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 const Projects = () => {
   const Router = useRouter();
   // const [project, setProject] = useState(null);

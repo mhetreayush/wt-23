@@ -5,7 +5,7 @@ import { Divider } from "@mui/material";
 import { collection, getDocs, query } from "firebase/firestore";
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import { db } from "../../../firebase";
+import { db } from "../../firebase";
 import FuzzySearch from "fuzzy-search";
 const Projects = ({ projects }) => {
   const [searchValue, setSearchValue] = useState("");
