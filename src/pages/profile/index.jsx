@@ -16,7 +16,7 @@ const Profile = () => {
     querySnapshot.forEach((doc) => {
       if (doc.id) {
         const members = doc.data().members;
-        members.forEach((member) => {
+        members?.forEach((member) => {
           if (member.uid === user.uid) {
             setEnrolledProjects((prev) => [...prev, doc.data()]);
           }
@@ -44,15 +44,16 @@ const Profile = () => {
       <Navbar />
       <PageWrapper>
         <div>
-          <h1>In Projects</h1>
-          <div className="flex flex-col w-full gap-y-4">
+          <h1 className="textHeadings">Projects Contributing In:</h1>
+          <div className="flex flex-col w-full gap-y-4 my-4">
             {enrolledProjects.map((project, idx) => {
               console.log(project);
               return <ProjectDiv key={idx} {...project} enrolled />;
             })}
           </div>
-          <h1>Created Projects:</h1>
-          <div className="flex flex-col w-full gap-y-4">
+          <h1 className="textHeadings">Created Projects:</h1>
+
+          <div className="flex flex-col w-full gap-y-4 my-4">
             {createdProjects.map((project, idx) => {
               return <ProjectDiv key={idx} {...project} enrolled />;
             })}
