@@ -30,7 +30,7 @@ const Projects = ({ projects }) => {
               <input
                 className="w-full"
                 style={{ outline: "none", backgroundColor: "transparent" }}
-                placeholder="Search Tag / Project Name / Task"
+                placeholder="Search Tag / Project Name"
                 onChange={(e) => setSearchValue(e.target.value)}
               />
             </div>

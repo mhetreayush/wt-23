@@ -25,6 +25,8 @@ const CreateProject = () => {
     const instructions = data.get("instructions");
     const materials = data.get("materials");
     const otherDetails = data.get("otherDetails");
+    const tags = data.get("tags");
+    const tagsArray = tags.split(",");
     const userData = await getData();
     console.log(userData);
     const projectId = Math.floor(Math.random() * 1000000000).toString();
@@ -43,6 +45,7 @@ const CreateProject = () => {
           name: userData.name,
           uid: user.uid,
         },
+        tags: tagsArray,
       });
       router.push("/home");
     } catch (e) {
@@ -107,6 +110,13 @@ const CreateProject = () => {
                 name="materials"
                 label="Materials Required"
                 id="materials"
+                fullWidth
+                required
+              />
+              <TextField
+                name="tags"
+                label="Tags (Separated by commas)"
+                id="tags"
                 fullWidth
                 required
               />

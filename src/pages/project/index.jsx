@@ -122,11 +122,11 @@ const Projects = () => {
             <div className="flex justify-between">
               <div className="flex gap-x-3 items-center">
                 <h1 className="text-lg font-semibold">{project?.name}</h1>
-                <div>
+                <div className="flex gap-x-2">
                   {project?.tags?.map((tag, idx) => {
                     return (
                       <h1 key={idx} className="tagClass">
-                        {tag}
+                        {tag.trim()}
                       </h1>
                     );
                   })}

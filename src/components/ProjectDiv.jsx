@@ -64,7 +64,7 @@ const ProjectDiv = ({
       <div className="flex justify-between">
         <div className="flex gap-x-3 items-center">
           <h1 className="text-lg font-semibold">{name}</h1>
-          <div className="hidden md:block">
+          <div className="hidden md:flex  gap-x-1">
             {tags?.map((tag, idx) => {
               return (
                 <h1 key={idx} className="tagClass">
@@ -78,7 +78,7 @@ const ProjectDiv = ({
           <h1 className=" text-primaryOrange hidden md:inline-block">
             {createdBy.name}
           </h1>
-          <div className="md:hidden">
+          <div className="md:hidden flex gap-x-1">
             {tags?.map((tag, idx) => {
               return (
                 <h1 key={idx} className="tagClass">
@@ -93,8 +93,10 @@ const ProjectDiv = ({
 
       <div className="flex justify-between md:hidden">
         <h1 className=" text-primaryOrange">{createdBy.name}</h1>
-        {members?.length > 0 && (
-          <h1 className="text-primaryOrange">{members.length} contributing </h1>
+        {members && (
+          <h1 className="text-primaryOrange">
+            {members ? members.length : 0} contributing
+          </h1>
         )}
       </div>
       <div className="flex justify-between w-full items-center">
@@ -114,11 +116,9 @@ const ProjectDiv = ({
         )}
 
         <div className=" max-w-1/4 flex-wrap gap-x-2 hidden md:flex">
-          {members?.length > 0 && (
-            <h1 className="text-primaryOrange">
-              {members.length} contributing{" "}
-            </h1>
-          )}
+          <h1 className="text-primaryOrange">
+            {members ? members.length : 0} contributing
+          </h1>
         </div>
       </div>
     </div>
