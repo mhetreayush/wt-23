@@ -11,7 +11,7 @@ const Navbar = () => {
   }, []);
   return (
     <div className="py-2 px-6 bg-white sticky top-0 z-50 flex justify-between items-center">
-      <Link href="/">
+      <Link href="/home">
         <Image src="/assets/logo.svg" alt="logo" width={250} height={250} />
       </Link>
       <div className="flex gap-x-3">
