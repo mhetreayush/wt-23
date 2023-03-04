@@ -1,0 +1,27 @@
+{
+  "name": "wt23",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.11",
+    "autoprefixer": "^10.4.13",
+    "eslint": "8.35.0",
+    "eslint-config-next": "13.2.3",
+    "firebase": "^9.17.2",
+    "fuzzy-search": "^3.2.1",
+    "next": "13.2.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.8.0",
+    "react-toastify": "^9.1.1",
+    "tailwindcss": "^3.2.7"
+  }
+}
