@@ -20,9 +20,11 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import { TextField } from "@mui/material";
+import GroupChats from "@/components/GroupChat";
 
 const Projects = () => {
   const Router = useRouter();
+  const [openChatOnPhone, setOpenChatOnPhone] = useState(false);
   const { isEnrolled } = Router.query;
   const [showConfirm, setShowConfirm] = useState(false);
   const style = {
@@ -35,6 +37,7 @@ const Projects = () => {
     boxShadow: 24,
   };
   const [project, setProject] = useState(null);
+
   useEffect(() => {
     const projId = Router.query.id;
     const getProject = async () => {
@@ -42,8 +45,8 @@ const Projects = () => {
       const q = query(projectRef, where("projectId", "==", projId));
       const querySnapshot = await getDocs(q);
 
-      setProject(querySnapshot.docs[0].data());
-      console.log(querySnapshot.docs[0].data());
+      setProject(querySnapshot?.docs[0]?.data());
+      // console.log(querySnapshot.docs[0].data());
     };
     getProject();
   }, []);
@@ -83,9 +86,9 @@ const Projects = () => {
   const handleStartProject = async () => {
     const projId = Router.query.id;
     const uid = JSON.parse(localStorage.getItem("user")).uid;
-    console.log(uid);
+
     const user = await getDoc(doc(db, "userProfiles", uid));
-    console.log(user.data());
+
     try {
       await setDoc(
         doc(db, "projects", projId),
@@ -107,64 +110,93 @@ const Projects = () => {
     <>
       <Navbar />
       <PageWrapper>
-        <Link href="/home">
-          <div className="flex item-center gap-x-3">
-            <BiArrowBack className="self-center" />
-            <h1>Back</h1>
-          </div>
-        </Link>
-        <div>
-          <div
-            className={`flex flex-col gap-y-4  mt-4 ${
-              isEnrolled ? "w-1/2" : "w-full"
-            }`}
-          >
-            <div className="flex justify-between">
-              <div className="flex gap-x-3 items-center">
-                <h1 className="text-lg font-semibold">{project?.name}</h1>
-                <div className="flex gap-x-2">
-                  {project?.tags?.map((tag, idx) => {
-                    return (
-                      <h1 key={idx} className="tagClass">
-                        {tag.trim()}
-                      </h1>
-                    );
-                  })}
-                </div>
-              </div>
-              {!isEnrolled && (
-                <button
-                  className="actionButton !rounded-md"
-                  onClick={() => setShowConfirm(true)}
-                >
-                  Start Now
-                </button>
-              )}
+        <div className="flex justify-between items-center">
+          <Link href="/home">
+            <div className="flex item-center gap-x-3">
+              <BiArrowBack className="self-center" />
+              <h1 className="self-center">Back</h1>
             </div>
-            <h1 className="flex items-center">
-              Expected Payment:&nbsp;
-              <span className="text-lg text-textHeading">
-                Rs. {project?.expectedPayment}
-              </span>
-            </h1>
-            <Divider />
-            <SemiSection
-              title="Description"
-              className={`${!isEnrolled ? "w-3/4" : "w-full"}`}
+          </Link>
+          {isEnrolled && (
+            <button
+              onClick={() => setOpenChatOnPhone(!openChatOnPhone)}
+              className="md:hidden actionButton rounded-md"
             >
-              {project?.desc}
-            </SemiSection>
-            <SemiSection title="Duration">{project?.duration}</SemiSection>
-            <SemiSection title="Final Shipment">
-              {project?.finalShipment}
-            </SemiSection>
-            <Divider />
-            <SemiSection title="Project Posted By">
-              {project?.createdBy.name}
-            </SemiSection>
-          </div>
-          {isEnrolled && <div className="w-1/2"></div>}
+              {openChatOnPhone ? "View Details" : "Open Chat"}
+            </button>
+          )}
         </div>
+        {!openChatOnPhone && (
+          <div className="flex gap-x-3 relative">
+            <div
+              className={`w-full flex flex-col gap-y-4  mt-4 ${
+                isEnrolled ? "md:w-1/2" : "md:w-full"
+              }`}
+            >
+              <div className="flex justify-between">
+                <div className="flex gap-x-3 items-center">
+                  <h1 className="text-lg font-semibold">{project?.name}</h1>
+                  <div className="flex gap-x-2">
+                    {project?.tags?.map((tag, idx) => {
+                      return (
+                        <h1 key={idx} className="tagClass">
+                          {tag.trim()}
+                        </h1>
+                      );
+                    })}
+                  </div>
+                </div>
+                {!isEnrolled && (
+                  <button
+                    className="actionButton !rounded-md"
+                    onClick={() => setShowConfirm(true)}
+                  >
+                    Start Now
+                  </button>
+                )}
+              </div>
+              <h1 className="flex items-center">
+                Expected Payment:&nbsp;
+                <span className="text-lg text-textHeading">
+                  Rs. {project?.expectedPayment}
+                </span>
+              </h1>
+              <Divider />
+              <SemiSection
+                title="Description"
+                className={`${!isEnrolled ? "w-3/4" : "w-full"}`}
+              >
+                {project?.desc}
+              </SemiSection>
+              <SemiSection title="Duration">{project?.duration}</SemiSection>
+              <SemiSection title="Final Shipment">
+                {project?.finalShipment}
+              </SemiSection>
+
+              <SemiSection title="Project Instructions">
+                {project?.instructions}
+              </SemiSection>
+              <SemiSection title="Materials Required">
+                {project?.materials}
+              </SemiSection>
+              <Divider />
+              <SemiSection title="Project Posted By">
+                {project?.createdBy.name}
+              </SemiSection>
+            </div>
+          </div>
+        )}
+        {isEnrolled && (
+          <div className="rounded-md hidden md:flex static w-full md:w-[40vw] md:ml-10 mt-4 md:mt-0 md:fixed items-center justify-center z-[1000] top-[15vh] left-[52vw] bg-primaryYellow">
+            <GroupChats projectId={Router.query.id} />
+          </div>
+        )}
+        {isEnrolled && openChatOnPhone && (
+          <div className="rounded-md flex static w-full md:w-[40vw] md:ml-10 mt-4 md:mt-0 md:fixed items-center justify-center z-[1000] top-[15vh] left-[52vw] bg-primaryYellow">
+            <GroupChats projectId={Router.query.id} />
+          </div>
+        )}
+
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"

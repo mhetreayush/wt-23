@@ -28,7 +28,7 @@ const CreateProject = () => {
     const tags = data.get("tags");
     const tagsArray = tags.split(",");
     const userData = await getData();
-    console.log(userData);
+
     const projectId = Math.floor(Math.random() * 1000000000).toString();
     try {
       await setDoc(doc(db, "projects", projectId), {

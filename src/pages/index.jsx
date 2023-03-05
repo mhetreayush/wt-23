@@ -27,15 +27,13 @@ const Index = () => {
     );
   };
   const signInWithOtp = () => {
-    console.log(otp);
-
     window.confirmationResult
       .confirm(otp)
       .then((result) => {
         const user = result.user;
         // dispatch(login(user));
         localStorage.setItem("user", JSON.stringify(user));
-        console.log(user);
+
         toast.success("User Signed In");
         setTimeout(() => {
           router.push("/home");
@@ -58,13 +56,13 @@ const Index = () => {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.message);
+        // toast.error(error.message);
       });
   };
   return (
-    <div className="bg-[url('/assets/loginBg.svg')] bg-cover bg-center min-h-screen min-w-screen">
-      <div className="min-h-screen w-1/2 h-full flex items-center justify-center  rounded-md">
-        <div className="bg-white h-fit w-3/4 p-8 flex flex-col gap-y-8 rounded-md drop-shadow-lg">
+    <div className="bg-[url('/assets/loginBgMobile.svg')] md:bg-[url('/assets/loginBg.svg')] bg-cover bg-center min-h-screen min-w-screen">
+      <div className="min-h-screen md:w-1/2 h-full flex items-center justify-center  rounded-md">
+        <div className="bg-white h-fit w-[95%] md:w-3/4 p-8 flex flex-col gap-y-8 rounded-md drop-shadow-lg">
           <Typography variant="h4" className="text-center mb-4">
             Login
           </Typography>

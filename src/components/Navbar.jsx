@@ -23,7 +23,7 @@ const Navbar = () => {
 
   const handleStartNow = async () => {
     const res = await getData();
-    console.log(res);
+
     if (!res) {
       setOpenModal(true);
     } else {
@@ -39,7 +39,7 @@ const Navbar = () => {
           <img
             src="/assets/logo.svg"
             alt="logo"
-            className="w-[150px] md:w-[250px]"
+            className="w-[150px] md:w-[200px]"
           />
         </Link>
         <div className="flex gap-x-3">

@@ -12,7 +12,7 @@ const Projects = ({ projects }) => {
   const [searchValue, setSearchValue] = useState("");
   const [selectedProject, setSelectedProject] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-  console.log(projects);
+
   const searcher = new FuzzySearch(projects, ["name", "tags"], {
     caseSensitive: false,
     sort: true,

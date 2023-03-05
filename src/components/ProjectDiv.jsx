@@ -31,28 +31,26 @@ const ProjectDiv = ({
     return docSnap.data();
   };
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
     const checkEnrolled = async () => {
       const projectRef = collection(db, "projects");
       const q = query(projectRef, where("projectId", "==", projectId));
       const querySnapshot = await getDocs(q);
       if (querySnapshot.docs[0].data().members) {
         const members = querySnapshot.docs[0].data().members;
-        const user = JSON.parse(localStorage.getItem("user"));
         members.forEach((member) => {
-          if (member.uid === user.uid) {
+          if (member?.uid === user?.uid) {
             setIsEnrolled(true);
           }
         });
       }
-      console.log(querySnapshot.docs[0].data());
     };
     checkEnrolled();
   }, []);
   const handleStartNow = async () => {
     setSelectedProject(projectId);
     const res = await getData();
-    console.log(projectId);
-    console.log(res);
+
     if (!res) {
       setOpenModal(true);
     } else {
@@ -64,7 +62,7 @@ const ProjectDiv = ({
       <div className="flex justify-between">
         <div className="flex gap-x-3 items-center">
           <h1 className="text-lg font-semibold">{name}</h1>
-          <div className="hidden md:flex  gap-x-1">
+          <div className="hidden md:flex  gap-x-1 max-w-full">
             {tags?.map((tag, idx) => {
               return (
                 <h1 key={idx} className="tagClass">
