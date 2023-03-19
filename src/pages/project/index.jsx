@@ -19,7 +19,6 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import { TextField } from "@mui/material";
 import GroupChats from "@/components/GroupChat";
 
 const Projects = () => {
@@ -27,15 +26,6 @@ const Projects = () => {
   const [openChatOnPhone, setOpenChatOnPhone] = useState(false);
   const { isEnrolled } = Router.query;
   const [showConfirm, setShowConfirm] = useState(false);
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-  };
   const [project, setProject] = useState(null);
 
   useEffect(() => {
@@ -46,30 +36,9 @@ const Projects = () => {
       const querySnapshot = await getDocs(q);
 
       setProject(querySnapshot?.docs[0]?.data());
-      // console.log(querySnapshot.docs[0].data());
     };
     getProject();
   }, []);
-  // const project = {
-  //   name: "Test Project",
-  //   duration:
-  //     "A tentative delivery period of 4-8 weeks may be required to produce and supply 50 pots, on the condition that they are of medium size and complexity, and the artisan has access to the requisite resources, including a kiln.",
-  //   members: [
-  //     {
-  //       name: "name here",
-  //       uid: "fUO7UxBOXSZrtGXgZh7N98Y3mw82",
-  //     },
-  //   ],
-  //   expectedPayment: "30,000",
-  //   tags: ["web 3"],
-  //   finalShipment: "Mumbai",
-  //   desc: "Pottery making project involves molding and shaping clay to create functional or decorative objects such as bowls, vases, or sculptures. The process typically involves hand-building techniques or using a potter's wheel, followed by firing the pieces in a kiln to harden and finish them. It requires patience, creativity, and attention to detail.",
-  //   projectId: "INI49xqpyPELtuXYaloM",
-  //   createdBy: {
-  //     uid: "fUO7UxBOXSZrtGXgZh7N98Y3mw82",
-  //     name: "Shanti Devi ",
-  //   },
-  // };
 
   const Divider = () => {
     return <hr className="border-b border-gray-300 my-2" />;
@@ -211,10 +180,7 @@ const Projects = () => {
           }}
         >
           <Fade in={showConfirm}>
-            <Box
-              sx={style}
-              className="rounded-md bg-primaryYellow p-4 w-[95vw] md:w-[50vw] h-[25vh] md:h-fit flex flex-col justify-center"
-            >
+            <Box className="modalStyle rounded-md bg-primaryYellow p-4 w-[95vw] md:w-[50vw] h-[25vh] md:h-fit flex flex-col justify-center">
               <h1 className="textHeadings text-center mb-8">Confirm Start</h1>
               <Box className="flex gap-x-4 justify-center items-center w-full">
                 <button

@@ -25,13 +25,15 @@ const Profile = () => {
     });
   };
   const getCreatedProjects = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
     const projectsRef = collection(db, "projects");
 
     const querySnapshot = await getDocs(projectsRef);
-
-    querySnapshot.forEach((doc) => {
+    querySnapshot.docs.forEach((doc) => {
       if (doc.id) {
-        setCreatedProjects((prev) => [...prev, doc.data()]);
+        if (doc.data().createdBy.uid === user.uid) {
+          setCreatedProjects((prev) => [...prev, doc.data()]);
+        }
       }
     });
   };

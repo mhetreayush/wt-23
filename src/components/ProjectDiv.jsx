@@ -61,7 +61,7 @@ const ProjectDiv = ({
     <div className="flex flex-col gap-y-4 rounded-md bg-primaryYellow p-6">
       <div className="flex justify-between">
         <div className="flex gap-x-3 items-center">
-          <h1 className="text-lg font-semibold">{name}</h1>
+          <h1 className="text-lg font-semibold">{name && name}</h1>
           <div className="hidden md:flex  gap-x-1 max-w-full">
             {tags?.map((tag, idx) => {
               return (
@@ -74,7 +74,7 @@ const ProjectDiv = ({
         </div>
         <div>
           <h1 className=" text-primaryOrange hidden md:inline-block">
-            {createdBy.name}
+            {createdBy?.name}
           </h1>
           <div className="md:hidden flex gap-x-1">
             {tags?.map((tag, idx) => {
@@ -90,7 +90,7 @@ const ProjectDiv = ({
       <p className="text-sm font-extralight w-3/4 text-gray-600">{desc}</p>
 
       <div className="flex justify-between md:hidden">
-        <h1 className=" text-primaryOrange">{createdBy.name}</h1>
+        <h1 className=" text-primaryOrange">{createdBy?.name}</h1>
         {members && (
           <h1 className="text-primaryOrange">
             {members ? members.length : 0} contributing

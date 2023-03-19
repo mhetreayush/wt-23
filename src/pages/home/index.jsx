@@ -17,6 +17,9 @@ const Projects = ({ projects }) => {
     caseSensitive: false,
     sort: true,
   });
+  useEffect(() => {
+    console.log(JSON.parse(localStorage.getItem("user")));
+  });
   var result = searcher.search(searchValue);
   return (
     <>

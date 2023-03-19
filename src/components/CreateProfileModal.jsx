@@ -3,21 +3,10 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import { TextField } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { useRouter } from "next/router";
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "50vw",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  zIndex: 1000,
-};
 
 const CreateProfileModal = ({
   openModal,
@@ -72,7 +61,7 @@ const CreateProfileModal = ({
         }}
       >
         <Fade in={openModal}>
-          <Box sx={style} className="rounded-md bg-primaryYellow p-4">
+          <Box className="modalStyle rounded-md bg-primaryYellow p-4">
             <h1 className="textHeadings text-center mb-8">Complete Profile</h1>
             <Box component="form" onSubmit={handleSubmit}>
               <Box className="flex flex-col gap-y-8">

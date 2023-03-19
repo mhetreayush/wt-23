@@ -8,8 +8,6 @@ import { TextField, Typography } from "@mui/material";
 import { IoArrowForwardCircleSharp } from "react-icons/io5";
 const Index = () => {
   const router = useRouter();
-  const formRef = useRef(null);
-  const otpRef = useRef(null);
   const [showOtp, setShowOtp] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
@@ -30,10 +28,11 @@ const Index = () => {
     window.confirmationResult
       .confirm(otp)
       .then((result) => {
+        console.log(result);
         const user = result.user;
         // dispatch(login(user));
         localStorage.setItem("user", JSON.stringify(user));
-
+        console.log(user);
         toast.success("User Signed In");
         setTimeout(() => {
           router.push("/home");
@@ -53,6 +52,7 @@ const Index = () => {
         window.confirmationResult = confirmationResult;
         toast.success("OTP Sent");
         setShowOtp(true);
+        console.log(confirmationResult);
       })
       .catch((error) => {
         console.log(error);
