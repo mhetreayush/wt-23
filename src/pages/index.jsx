@@ -23,7 +23,9 @@ const Index = () => {
       },
       authentication
     );
+    window.recaptchaVerifier.render();
   };
+
   const signInWithOtp = () => {
     window.confirmationResult
       .confirm(otp)
