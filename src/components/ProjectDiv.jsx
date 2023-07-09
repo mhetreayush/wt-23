@@ -26,6 +26,7 @@ const ProjectDiv = ({
   const [isEnrolled, setIsEnrolled] = useState(false);
   const getData = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user.uid);
     const userRef = doc(db, "userProfiles", user.uid);
     const docSnap = await getDoc(userRef);
     return docSnap.data();
@@ -34,6 +35,7 @@ const ProjectDiv = ({
     const user = JSON.parse(localStorage.getItem("user"));
     const checkEnrolled = async () => {
       const projectRef = collection(db, "projects");
+
       const q = query(projectRef, where("projectId", "==", projectId));
       const querySnapshot = await getDocs(q);
       if (querySnapshot.docs[0].data().members) {
@@ -45,7 +47,7 @@ const ProjectDiv = ({
         });
       }
     };
-    checkEnrolled();
+    projectId && checkEnrolled();
   }, []);
   const handleStartNow = async () => {
     setSelectedProject(projectId);
@@ -63,13 +65,15 @@ const ProjectDiv = ({
         <div className="flex gap-x-3 items-center">
           <h1 className="text-lg font-semibold">{name && name}</h1>
           <div className="hidden md:flex  gap-x-1 max-w-full">
-            {tags?.map((tag, idx) => {
-              return (
-                <h1 key={idx} className="tagClass">
-                  {tag}
-                </h1>
-              );
-            })}
+            {tags
+              ?.filter((tag) => tag.trim().length > 0)
+              .map((tag, idx) => {
+                return (
+                  <h1 key={idx} className="tagClass">
+                    {tag}
+                  </h1>
+                );
+              })}
           </div>
         </div>
         <div>

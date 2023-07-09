@@ -34,9 +34,7 @@ const Index = () => {
         localStorage.setItem("user", JSON.stringify(user));
         console.log(user);
         toast.success("User Signed In");
-        setTimeout(() => {
-          router.push("/home");
-        }, 1000);
+        router.push("/home");
       })
       .catch((error) => {
         toast.error(error.message);
