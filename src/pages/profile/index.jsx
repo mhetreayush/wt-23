@@ -44,7 +44,7 @@ const Profile = () => {
   return (
     <>
       <Navbar />
-      <PageWrapper>
+      <PageWrapper title="💼 Profile">
         <div>
           <h1 className="textHeadings">Projects Contributing In:</h1>
           <div className="flex flex-col w-full gap-y-4 my-4">

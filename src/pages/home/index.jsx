@@ -24,7 +24,7 @@ const Projects = ({ projects }) => {
   return (
     <>
       <Navbar />
-      <PageWrapper>
+      <PageWrapper title="🏠 Home">
         <div className="flex min-h-screen gap-y-4 flex-col">
           <div>
             <h1 className="textHeadings mb-10">Search Projects</h1>

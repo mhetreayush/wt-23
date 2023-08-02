@@ -76,6 +76,9 @@ const Index = () => {
         console.log(error);
       });
   };
+  useEffect(() => {
+    document.title = "Login";
+  }, []);
   return (
     <div className="bg-[url('/assets/loginBgMobile.svg')] md:bg-[url('/assets/loginBg.svg')] bg-cover bg-center min-h-screen min-w-screen">
       <div className="min-h-screen md:w-1/2 h-full flex items-center justify-center  rounded-md">

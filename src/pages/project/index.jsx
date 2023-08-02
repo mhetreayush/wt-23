@@ -24,21 +24,19 @@ import GroupChats from "@/components/GroupChat";
 const Projects = () => {
   const Router = useRouter();
   const [openChatOnPhone, setOpenChatOnPhone] = useState(false);
-  const { isEnrolled } = Router.query;
+  const { isEnrolled, id: projId } = Router.query;
   const [showConfirm, setShowConfirm] = useState(false);
   const [project, setProject] = useState(null);
+  const getProject = async (projId) => {
+    const projectRef = collection(db, "projects");
+    const q = query(projectRef, where("projectId", "==", projId));
+    const querySnapshot = await getDocs(q);
+    setProject(querySnapshot?.docs[0]?.data());
+  };
 
   useEffect(() => {
-    const projId = Router.query.id;
-    const getProject = async () => {
-      const projectRef = collection(db, "projects");
-      const q = query(projectRef, where("projectId", "==", projId));
-      const querySnapshot = await getDocs(q);
-
-      setProject(querySnapshot?.docs[0]?.data());
-    };
-    getProject();
-  }, []);
+    projId && getProject(projId);
+  }, [projId]);
 
   const Divider = () => {
     return <hr className="border-b border-gray-300 my-2" />;
@@ -78,7 +76,7 @@ const Projects = () => {
   return (
     <>
       <Navbar />
-      <PageWrapper>
+      <PageWrapper title="Project details">
         <div className="flex justify-between items-center">
           <Link href="/home">
             <div className="flex item-center gap-x-3">

@@ -55,7 +55,7 @@ const CreateProject = () => {
   return (
     <>
       <Navbar />
-      <PageWrapper>
+      <PageWrapper title="📃 Create project">
         <h1 className="textHeadings mb-4">Host Your Project</h1>
 
         <div className="p-4 bg-primaryYellow rounded-md flex flex-col gap-y-4">
