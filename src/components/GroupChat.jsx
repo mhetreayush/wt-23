@@ -1,63 +1,74 @@
-import { db } from "../../firebase";
-import { setDoc, getDoc, doc, arrayUnion } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { getDatabase, ref, push, onValue } from "firebase/database";
 import { RiSendPlaneFill } from "react-icons/ri";
+import { db } from "../../firebase";
+import { doc, getDoc } from "firebase/firestore";
+const realtimeDB = getDatabase();
+
 const GroupChats = ({ projectId }) => {
   const [groupChats, setGroupChats] = useState([]);
-  const [uid, setUid] = useState(null);
-  const [projectName, setProjectName] = useState(null);
   const [isChatLoaded, setIsChatLoaded] = useState(false);
   const [newMsg, setNewMsg] = useState("");
+  const [projectName, setProjectName] = useState(null);
+  const [uid, setUid] = useState(null);
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-
-    setUid(user.uid);
+    if (user) {
+      setUid(user.uid);
+    }
   }, []);
-  const fetchMsg = async () => {
-    const chats = await getDoc(doc(db, "groupChats", `${projectId}_Chats`));
-    setGroupChats(chats?.data()?.chats);
-
-    setIsChatLoaded(true);
-  };
-
-  const getProjectName = async () => {
-    const project = await getDoc(doc(db, "projects", projectId));
-    setProjectName(project.data().name);
-  };
-
   const addMsg = async () => {
     const uid = JSON.parse(localStorage.getItem("user")).uid;
 
     const user = await getDoc(doc(db, "userProfiles", uid));
     const userName = user.data().name;
 
-    const docRef = doc(db, "groupChats", `${projectId}_Chats`);
-    await setDoc(
-      docRef,
-      {
-        chatId: `${projectId}_Chats`,
-        chats: arrayUnion({
-          from: {
-            name: userName,
-            uid,
-          },
-          type: "text",
-          text: newMsg,
-          time: new Date().getTime(),
-        }),
+    const chatRef = ref(realtimeDB, `groupChats/${projectId}_Chats/chats`);
+
+    const newMsgData = {
+      from: {
+        name: userName,
+        uid,
       },
-      { merge: true }
-    );
+      type: "text",
+      text: newMsg,
+      time: new Date().getTime(),
+    };
+
+    push(chatRef, newMsgData);
+
     setNewMsg("");
-    fetchMsg();
+  };
+
+  const fetchProjectName = async () => {
+    const project = await getDoc(doc(db, "projects", projectId));
+    const projectData = project.data();
+    if (projectData) {
+      const projectName = projectData.name;
+      setProjectName(projectName);
+    }
   };
 
   useEffect(() => {
-    setInterval(() => {
-      fetchMsg();
-    }, 100);
-    getProjectName();
-  }, []);
+    fetchProjectName();
+    const chatRef = ref(realtimeDB, `groupChats/${projectId}_Chats/chats`);
+
+    const chatListener = onValue(chatRef, (snapshot) => {
+      const chatData = snapshot.val();
+      if (chatData) {
+        const chats = Object.values(chatData);
+        setGroupChats(chats);
+        setIsChatLoaded(true);
+      }
+    });
+
+    return () => {
+      // Clean up the listener when component unmounts
+      chatListener();
+    };
+  }, [projectId]);
+
   return (
     <div className="h-[80vh] md:h-[600px]  overflow-y-auto w-full flex flex-col justify-between ">
       <div className="sticky top-0 pl-2 py-2 border-b border-black bg-primaryYellow ">
