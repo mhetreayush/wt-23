@@ -46,7 +46,7 @@ const RecruiterModal = ({ setOpenModal, openModal }) => {
         <Fade in={openModal}>
           <Box className="modalStyle rounded-md bg-primaryYellow p-2 md:p-4 flex flex-col md:justify-between gap-y-3 justify-center ">
             <h1 className="textHeadings text-center mb-2 md:mb-8">
-              For recruiters
+              Recruiter login
             </h1>
 
             <Box className="flex w-full items-center justify-center">
