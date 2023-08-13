@@ -9,6 +9,8 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
 import { HiArrowRight } from "react-icons/hi";
 import OTP from "@/components/OTP";
+import RecruiterModal from "@/components/RecruiterModal";
+import { BsInfoCircleFill } from "react-icons/bs";
 const otpStatus = {
   pending: <HiArrowRight />,
   inProgress: <AiOutlineLoading3Quarters className="animate-spin" />,
@@ -20,6 +22,7 @@ const Index = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otpSentStatus, setOtpSentStatus] = useState("pending");
   const [otpValue, setOtpValue] = useState("");
+  const [openRecruiterModal, setOpenRecruiterModal] = useState(false);
   const phoneRef = useRef();
   useEffect(() => {
     phoneRef.current?.focus();
@@ -87,6 +90,15 @@ const Index = () => {
             Login
           </Typography>
           <Box className="flex flex-col gap-y-4">
+            <button
+              className="w-fit px-4 py-2 actionButton flex gap-x-2 items-center mb-4"
+              onClick={() => setOpenRecruiterModal(true)}
+            >
+              <span>
+                <BsInfoCircleFill size={25} />
+              </span>{" "}
+              For recruiters
+            </button>
             <Box>
               <form
                 action="()=>{}"
@@ -128,7 +140,10 @@ const Index = () => {
             Submit
           </button>
         </div>
-
+        <RecruiterModal
+          setOpenModal={setOpenRecruiterModal}
+          openModal={openRecruiterModal}
+        />
         <div id="recaptcha-container"></div>
       </div>
     </div>
